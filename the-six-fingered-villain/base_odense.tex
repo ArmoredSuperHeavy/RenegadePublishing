@@ -1,0 +1,180 @@
+% universal settings
+\documentclass[smalldemyvopaper,11pt,twoside,onecolumn,openright,extrafontsizes]{memoir}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[osf]{Alegreya,AlegreyaSans}
+
+% PACKAGE DEFINITION
+% typographical packages
+\usepackage{microtype} % for micro-typographical adjustments
+\usepackage{setspace} % for line spacing
+\usepackage{lettrine} % for drop caps and awesome chapter beginnings
+\usepackage{titlesec} % for manipulation of chapter titles
+
+% for placeholder text
+\usepackage{lipsum} % to generate Lorem Ipsum
+% \usepackage{cleveref} % for section symbol clef
+
+% other
+\usepackage{calc}
+\usepackage{hologo}
+\usepackage[hidelinks]{hyperref}
+%\usepackage{showframe}
+
+% PHYSICAL DOCUMENT SETUP
+% media settings
+\setstocksize{6in}{4.5in} %6.5in}{3.675in}
+\settrimmedsize{6in}{4.5in}{*}
+\setbinding{0.2in} %175in}
+\setlrmarginsandblock{0.1in}{0.1in}{*} %{0.111in}{0.222in}{*}
+\setulmarginsandblock{0.5in}{0.5in}{*} %{0.522in}{0.545in}{*}
+
+%\usepackage{geometry} % for other page setup
+%\geometry{
+ %c6paper,
+ % due to the folded nature of my printouts, and the failure to scale the paper correctly
+ % the bottom and non-bound margins have extra space. The top and the bound margin
+ % are expected to be the specified offsets here.
+ %bottom=8mm,
+ %left=5mm,
+% right=5mm,
+% top=20mm,
+% bindingoffset=5mm,
+%}
+
+
+% defining the title and the author
+%\title{\LaTeX{} ePub Template}
+%\title{\textsc{How I Started to Love {\fontfamily{cmr}\selectfont\LaTeX{}}}}
+\title{Time Is A Wealth Of Change}
+\author{Hexiva \& versaphile}
+\newcommand{\ISBN}{0-000-00000-2}
+\newcommand{\press}{Archive of Our Own, New York}
+
+% custom second title page
+\makeatletter
+\newcommand*\halftitlepage{\begingroup % Misericords, T&H p 153
+  \setlength\drop{0.1\textheight}
+  \begin{center}
+  \vspace*{\drop}
+  \rule{\textwidth}{0in}\par
+  {\Large\textsc\thetitle\par}
+  \rule{\textwidth}{0in}\par
+  \vfill
+  \end{center}
+\endgroup}
+\makeatother
+
+% custom title page
+\thispagestyle{empty}
+\makeatletter
+\newlength\drop
+\newcommand*\titleM{\begingroup % Misericords, T&H p 153
+  \setlength\drop{0.15\textheight}
+  \begin{center}
+  \vspace*{\drop}
+  \rule{\textwidth}{0in}\par
+  {\HUGE\textsc\thetitle\par}
+  \rule{\textwidth}{0in}\par
+  {\Large\textit\theauthor\par}
+  \vfill
+  {\Large\scshape\press}
+  \end{center}
+\endgroup}
+\makeatother
+
+% chapter title manipulation
+% padding with zero
+\renewcommand*\thechapter{\ifnum\value{chapter}<10 0\fi\arabic{chapter}}
+% chapter title display
+\titleformat
+{\chapter}
+[display]
+{\normalfont\scshape\huge}
+{\HUGE\thechapter\centering}
+{0pt}
+{\vspace{18pt}\centering}[\vspace{42pt}]
+
+% typographical settings for the body text
+\setlength{\parskip}{0em}
+\linespread{1.09}
+
+% HEADER AND FOOTER MANIPULATION
+  % for normal pages
+  \nouppercaseheads
+  \headsep = 0.16in
+  \makepagestyle{mystyle} 
+  \setlength{\headwidth}{\dimexpr\textwidth+\marginparsep+\marginparwidth\relax}
+  \makerunningwidth{mystyle}{\headwidth}
+  \makeevenhead{mystyle}{}{\textsf{\scriptsize\scshape\thetitle}}{}
+  \makeoddhead{mystyle}{}{\textsf{\scriptsize\scshape\leftmark}}{}
+  \makeevenfoot{mystyle}{}{\textsf{\scriptsize\thepage}}{}
+  \makeoddfoot{mystyle}{}{\textsf{\scriptsize\thepage}}{}
+  \makeatletter
+  \makepsmarks{mystyle}{%
+  \createmark{chapter}{left}{nonumber}{\@chapapp\ }{.\ }}
+  \makeatother
+  % for pages where chapters begin
+  \makepagestyle{plain}
+  \makerunningwidth{plain}{\headwidth}
+  \makeevenfoot{plain}{}{}{}
+  \makeoddfoot{plain}{}{}{}
+  \pagestyle{mystyle}
+% END HEADER AND FOOTER MANIPULATION
+
+% table of contents customisation
+\renewcommand\contentsname{\normalfont\scshape Contents}
+\renewcommand\cftchapterfont{\normalfont}
+\renewcommand{\cftchapterpagefont}{\normalfont}
+\renewcommand{\printtoctitle}{\centering\Huge}
+
+% layout check and fix
+\checkandfixthelayout
+\fixpdflayout
+
+\newcommand*{\sceneHeadline}[2][]{%
+\begin{center} $\cdots$ $\bullet$~$\bullet$~~~$\diamond$~~~$\bullet$~$\bullet$ $\cdots$\end{center}
+    %\noindent\makebox[\linewidth]{#1%
+    %\textbf{#2}
+    %\leaders\hrule height \dimexpr.5ex+.2pt\relax depth \dimexpr -.5ex+.2pt\relax \hfill\kern0pt% Right rule
+    %}
+}
+
+
+% BEGIN THE DOCUMENT
+\begin{document}
+\pagestyle{empty}
+% the half title page
+\thispagestyle{empty}
+\halftitlepage
+\cleardoublepage
+% the title page
+\thispagestyle{empty}
+\titleM
+\clearpage
+% copyright page
+\thispagestyle{empty} 
+\noindent{\small{This novel is entirely a work of fiction. Characters from the Legion are used under fair use in transformative works. The incidents portrayed in it are the product of the authors' imaginations.\par\vfill\noindent  First Edition February 29, 2020 \par\noindent Print Edition\space\today\\\copyright\space\theauthor. All rights reserved.\par\vfill\noindent\theauthor\space asserts the moral right to be identified as the author of this work. All rights reserved in all media. No part of this publication may be used for profit.\par}}
+\clearpage
+
+
+% begin front matter
+\frontmatter
+\pagestyle{mystyle}
+
+% table of contents
+\clearpage
+\tableofcontents*
+
+% begin main matter
+\mainmatter
+
+
+% begin back matter
+
+\include{content_rc1}   
+\include{content_rc2}  
+\include{content_rc3}   
+
+\end{document}
+% END THE DOCUMENT
