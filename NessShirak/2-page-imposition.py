@@ -53,20 +53,23 @@ numSigPages = inputSignatureNumber("Pages per signature: ")
 pdfReader = PdfFileReader(file(fileName,"rb"))
 
 totalPages = pdfReader.getNumPages()
-pdfWriter = PdfFileWriter()
+if totalPages%4==0:
+    pdfWriter = PdfFileWriter()
 
-for j in range(0,totalPages,numSigPages):
-    #separate pages to make signature
-    listPages = []
-    for i in range(numSigPages):
-        listPages.append(pdfReader.getPage(j+i))
+    for j in range(0,totalPages,numSigPages):
+        #separate pages to make signature
+        listPages = []
+        for i in range(numSigPages):
+            listPages.append(pdfReader.getPage(j+i))
 
-    #make signature
-    listDoublePages = makeSimpleSignature(listPages,numSigPages)
+        #make signature
+        listDoublePages = makeSimpleSignature(listPages,numSigPages)
 
-    for page in listDoublePages:
-        pdfWriter.addPage(page)
-    
-f = open("imposed-"+fileName, "wb")
-pdfWriter.write(f)
-f.close()
+        for page in listDoublePages:
+            pdfWriter.addPage(page)
+
+    f = open("imposed-"+fileName, "wb")
+    pdfWriter.write(f)
+    f.close()
+else:
+    print "The number of pages in your document should be a multiple of 4!"

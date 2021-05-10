@@ -52,39 +52,42 @@ fileName = inputFileName("Enter file name: ")
 numSigPages = inputSignatureNumber("Pages per signature: ")
 pdfReader = PdfFileReader(file(fileName,"rb"))
 
-#numSigPages = 28
+
 totalPages = pdfReader.getNumPages()
-pdfWriter = PdfFileWriter()
+if totalPages%4==0:
+    pdfWriter = PdfFileWriter()
 
-for j in range(0,totalPages,numSigPages*2):
-    #separate pages to make first signature
-    listPages = []
-    for i in range(numSigPages):
-        listPages.append(pdfReader.getPage(j+i))
-    #make first signature
-    listDoublePages1 = makeSimpleSignature(listPages,numSigPages)
+    for j in range(0,totalPages,numSigPages*2):
+        #separate pages to make first signature
+        listPages = []
+        for i in range(numSigPages):
+            listPages.append(pdfReader.getPage(j+i))
+        #make first signature
+        listDoublePages1 = makeSimpleSignature(listPages,numSigPages)
 
-    #separate pages to make second signature
-    listPages = []
-    for i in range(numSigPages):
-        if j+numSigPages+i < totalPages:
-            listPages.append(pdfReader.getPage(j+numSigPages+i))
-        else:
-            listPages.append(pdf.PageObject.createBlankPage(pdfReader))
-    #make second signature
-    listDoublePages2 = makeSimpleSignature(listPages,numSigPages)
-    
-    listCuadruplePages = []
-    if j+numSigPages*2 <= totalPages: #even number of signatures
-        for i in range(numSigPages/2):
-            listCuadruplePages.append( topToBottomPage(listDoublePages1[i],listDoublePages2[i]) )
-    else: #odd number of signatures
-        for i in range(numSigPages/4):
-            listCuadruplePages.append( topToBottomPage(listDoublePages1[i],listDoublePages1[i+numSigPages/4]) )
-        
-    for page in listCuadruplePages:
-        pdfWriter.addPage(page)
-    
-f = open("imposed-"+fileName, "wb")
-pdfWriter.write(f)
-f.close()
+        #separate pages to make second signature
+        listPages = []
+        for i in range(numSigPages):
+            if j+numSigPages+i < totalPages:
+                listPages.append(pdfReader.getPage(j+numSigPages+i))
+            else:
+                listPages.append(pdf.PageObject.createBlankPage(pdfReader))
+        #make second signature
+        listDoublePages2 = makeSimpleSignature(listPages,numSigPages)
+
+        listCuadruplePages = []
+        if j+numSigPages*2 <= totalPages: #even number of signatures
+            for i in range(numSigPages/2):
+                listCuadruplePages.append( topToBottomPage(listDoublePages1[i],listDoublePages2[i]) )
+        else: #odd number of signatures
+            for i in range(numSigPages/4):
+                listCuadruplePages.append( topToBottomPage(listDoublePages1[i],listDoublePages1[i+numSigPages/4]) )
+
+        for page in listCuadruplePages:
+            pdfWriter.addPage(page)
+
+    f = open("imposed-"+fileName, "wb")
+    pdfWriter.write(f)
+    f.close()
+else:
+    print "The number of pages in your document should be a multiple of 4!"
