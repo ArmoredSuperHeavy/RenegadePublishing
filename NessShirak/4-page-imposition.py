@@ -1,4 +1,20 @@
 from PyPDF2 import PdfFileReader, PdfFileWriter, pdf
+import os.path
+
+def inputSignatureNumber(text):
+    sigNum = input(text)
+    while sigNum%4!=0:
+        print "The number of pages per signature has to be a multiple of 4"
+        sigNum = input(text)
+    return sigNum
+
+def inputFileName(text):
+    name = raw_input(text)
+    while not os.path.isfile(name):
+        print "No such file exists"
+        name = raw_input(text)
+    return name
+
 
 def topToBottomPage(page1, page2):
     ancho = page1.mediaBox.upperRight[0]
@@ -9,7 +25,6 @@ def topToBottomPage(page1, page2):
     page.mergeTranslatedPage(page1,0,alto/2)
 
     return page
-    
 
 
 def sideBySidePage(page1, page2):
@@ -33,8 +48,8 @@ def makeSimpleSignature(listPages,numSigPages):
 
 
 
-fileName = raw_input("Enter file name: ")
-numSigPages = input("Pages per signature: ")
+fileName = inputFileName("Enter file name: ")
+numSigPages = inputSignatureNumber("Pages per signature: ")
 pdfReader = PdfFileReader(file(fileName,"rb"))
 
 #numSigPages = 28
@@ -60,9 +75,13 @@ for j in range(0,totalPages,numSigPages*2):
     listDoublePages2 = makeSimpleSignature(listPages,numSigPages)
     
     listCuadruplePages = []
-    for i in range(numSigPages/2):
-        listCuadruplePages.append( topToBottomPage(listDoublePages1[i],listDoublePages2[i]) )
-
+    if j+numSigPages*2 <= totalPages: #even number of signatures
+        for i in range(numSigPages/2):
+            listCuadruplePages.append( topToBottomPage(listDoublePages1[i],listDoublePages2[i]) )
+    else: #odd number of signatures
+        for i in range(numSigPages/4):
+            listCuadruplePages.append( topToBottomPage(listDoublePages1[i],listDoublePages1[i+numSigPages/4]) )
+        
     for page in listCuadruplePages:
         pdfWriter.addPage(page)
     

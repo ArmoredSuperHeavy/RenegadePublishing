@@ -1,4 +1,19 @@
 from PyPDF2 import PdfFileReader, PdfFileWriter, pdf
+import os.path
+
+def inputSignatureNumber(text):
+    sigNum = input(text)
+    while sigNum%4!=0:
+        print "The number of pages per signature has to be a multiple of 4"
+        sigNum = input(text)
+    return sigNum
+
+def inputFileName(text):
+    name = raw_input(text)
+    while not os.path.isfile(name):
+        print "No such file exists"
+        name = raw_input(text)
+    return name
 
 def topToBottomPage(page1, page2):
     ancho = page1.mediaBox.upperRight[0]
@@ -33,8 +48,8 @@ def makeSimpleSignature(listPages,numSigPages):
 
 
 
-fileName = raw_input("Enter file name: ")
-numSigPages = input("Pages per signature: ")
+fileName = inputFileName("Enter file name: ")
+numSigPages = inputSignatureNumber("Pages per signature: ")
 pdfReader = PdfFileReader(file(fileName,"rb"))
 
 totalPages = pdfReader.getNumPages()
