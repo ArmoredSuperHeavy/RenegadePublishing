@@ -54,7 +54,7 @@ pdfReader = PdfFileReader(file(fileName,"rb"))
 
 
 totalPages = pdfReader.getNumPages()
-if totalPages%4==0:
+if totalPages%4==0 and totalPages%numSigPages==0:
     pdfWriter = PdfFileWriter()
 
     for j in range(0,totalPages,numSigPages*2):
@@ -89,5 +89,7 @@ if totalPages%4==0:
     f = open("imposed-"+fileName, "wb")
     pdfWriter.write(f)
     f.close()
-else:
+elif totalPages%4!=0:
     print "The number of pages in your document should be a multiple of 4!"
+else:
+    print "The number of pages of your document and your signatures don't fit!"
