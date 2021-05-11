@@ -53,18 +53,33 @@ numSigPages = inputSignatureNumber("Pages per signature: ")
 pdfReader = PdfFileReader(file(fileName,"rb"))
 
 totalPages = pdfReader.getNumPages()
-if totalPages%4==0 and totalPages%numSigPages==0:
+if totalPages%numSigPages!=0:
+    numLastSigPages = inputSignatureNumber("Pages for the last signature: ")
+else:
+    numLastSigPages = numSigPages
+    
+if totalPages%4==0 and (totalPages-numLastSigPages)%numSigPages==0:
     pdfWriter = PdfFileWriter()
 
-    for j in range(0,totalPages,numSigPages):
+    j = 0
+    while j < totalPages:
         #separate pages to make signature
         listPages = []
-        for i in range(numSigPages):
-            listPages.append(pdfReader.getPage(j+i))
+        if j+numLastSigPages != totalPages:
+            for i in range(numSigPages):
+                listPages.append(pdfReader.getPage(j+i))
 
-        #make signature
-        listDoublePages = makeSimpleSignature(listPages,numSigPages)
+            #make signature
+            listDoublePages = makeSimpleSignature(listPages,numSigPages)
+            j += numSigPages
+        else:
+            for i in range(numLastSigPages):
+                listPages.append(pdfReader.getPage(j+i))
 
+            #make signature
+            listDoublePages = makeSimpleSignature(listPages,numLastSigPages)
+            j += numLastSigPages
+            
         for page in listDoublePages:
             pdfWriter.addPage(page)
 
