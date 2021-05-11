@@ -70,6 +70,7 @@ if totalPages%4==0 and (totalPages-numLastSigPages)%numSigPages==0:
                 listPages.append(pdfReader.getPage(j+i))
 
             #make signature
+            print "making signature " + str((j/numSigPages + 1)) +"..."
             listDoublePages = makeSimpleSignature(listPages,numSigPages)
             j += numSigPages
         else:
@@ -77,6 +78,7 @@ if totalPages%4==0 and (totalPages-numLastSigPages)%numSigPages==0:
                 listPages.append(pdfReader.getPage(j+i))
 
             #make signature
+            print "making signature " + str((j/numSigPages + 1)) +"..."
             listDoublePages = makeSimpleSignature(listPages,numLastSigPages)
             j += numLastSigPages
             
