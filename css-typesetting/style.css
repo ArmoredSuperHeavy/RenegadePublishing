@@ -1,0 +1,221 @@
+@media screen {
+    body {
+        width: 50%;
+    }
+} 
+/* everything inside "@media screen" only affects the browser view, not the pdf. use this to adjust what you see while you're previewing in the browser. for example here I've set the page width to 50% to look more like a book page. */
+
+@font-face {
+    font-family: FONT_NAME_HERE; /* replace this (and any other instances of FONT_NAME_HERE) with a friendly name of your choice for your font */
+    src: url(fonts/yourfont.ttf); /* replace the "url" with the relative file path to the font file you want to use */
+}
+
+@page: right {
+    @bottom-right {
+        content: counter(page);
+        font-family: FONT_NAME_HERE;
+        font-size: 18px;
+    }
+}
+
+@page: left {
+    @bottom-left {
+        content: counter(page);
+        font-family: FONT_NAME_HERE;
+        font-size: 18px;
+    }
+}
+
+body {
+    margin: auto;
+    text-align: justify;
+    line-height: 1.5em;
+    font-size: 18px;
+    font-family: FONT_NAME_HERE;
+}
+
+p {
+    text-indent: 2em;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+a {
+    text-decoration: none;
+    color: currentColor;
+}
+
+hr {
+    border: none;
+    text-align: center;
+}
+
+hr::after {
+    content: '***';
+}
+
+#firstpage {
+    break-before: right;
+    break-after: right;
+}
+
+#titlepage {
+    break-before: right;
+    break-after: right;
+    margin: auto;
+    text-align: center;
+    height: 100vh;
+    margin-top: 30vh;
+}
+
+#title {
+    font-size: 32px;
+}
+
+#byline {
+    font-size: 24px;
+    margin-top: 1em;
+}
+
+#chapters .heading {
+    break-before: right;
+    text-align: center;
+}
+
+#chapters .meta.group>p,blockquote {
+    display: none;
+}
+
+.endnote-link {
+    display: none;
+}
+
+[id^="endnotes"] {
+    display: none;
+}
+
+/* #region preface */
+
+#preface {
+    break-before: left;
+    break-after: left;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 14px;
+}
+
+#preface>p {
+    text-indent: 0;
+    text-align: left;
+}
+
+#preface>.toc-heading {
+    display: none;
+}
+
+#preface>.message>b {
+    display: none;
+}
+
+#preface>.message>br {
+    display: none;
+}
+
+#preface h1 {
+    display: none;
+}
+
+#preface .byline {
+    display: none;
+}
+
+#preface .tags dt {
+    float: left;
+    clear: left;
+    text-align: right;
+    white-space: nowrap;
+}
+
+#preface .tags dd {
+    margin-left: 200px;
+    text-align: left;
+}
+
+#preface .meta>p::after {
+    content: ":";
+}
+
+#preface blockquote {
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 1em;
+}
+
+/* #endregion */
+
+/* #region toc */
+
+#toc {
+    break-before: right;
+    break-after: right;
+    margin: auto;
+    text-align: center;
+    height: 100vh;
+    margin-top: 40vh;
+}
+
+#toc li {
+    list-style: none;
+}
+
+#toc li a {
+    width: 50%;
+    display: inline-flex;
+}
+
+#toc li a::before {
+    flex: auto;
+    content: "";
+    order: 1;
+}
+
+#toc li a::after {
+    content: target-counter(attr(href, url), page);
+    order: 2;
+}
+
+/* #endregion */
+
+/* #region afterword */
+
+#afterword {
+    break-before: right;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+#afterword #endnotes>p {
+    display: none;
+}
+
+#afterword blockquote {
+    margin-left: 0;
+    margin-top: 0;
+}
+
+#afterword dl {
+    display: none;
+}
+
+#afterword>.message {
+    text-indent: 0%;
+    position: absolute;
+    bottom: 0%;
+}
+
+/* #endregion */
