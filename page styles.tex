@@ -1,0 +1,25 @@
+% Page Style - single book
+\newcommand{\booktitle}{You Can't Choose Your Family}
+\addtopsmarks{myheadings}{}{
+\createplainmark{toc}{left}{\thetitle}
+\createmark{chapter}{right}{shownumber}{Chapter }{. \ }
+\uppercaseheads
+}
+\makeevenhead{myheadings}{\thepage}{\small\itshape\leftmark}{} % book title on even page
+\makeoddhead{myheadings}{}{\small\itshape\rightmark}{\thepage} % chapter title on odd page
+\makeevenfoot{myheadings}{}{}{}
+\makeoddfoot{myheadings}{}{}{}
+\pagestyle{myheadings}
+
+% Page Style - multiple books
+\newcommand{\booktitle}{You Can't Choose Your Family}
+\addtopsmarks{myheadings}{}{
+\createmark{book}{left}{nonumber}{}{}
+\createmark{chapter}{right}{shownumber}{Chapter }{. \ }
+\uppercaseheads
+}
+\makeevenhead{myheadings}{\thepage}{\small\itshape\leftmark}{} % book title on even page
+\makeoddhead{myheadings}{}{\small\itshape\rightmark}{\thepage} % chapter title on odd page
+\makeevenfoot{myheadings}{}{}{}
+\makeoddfoot{myheadings}{}{}{}
+\pagestyle{myheadings}
