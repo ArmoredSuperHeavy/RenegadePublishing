@@ -1,4 +1,6 @@
 % Roman Chapter Style for memoir
+
+% standard, is equivalent to RomanLC 
 \renewcommand{\thechapter}{\MakeTextUppercase{\roman{chapter}}}  % This changes the chapter numbers to Roman numerals everywhere (contents, chapter headings, page headers, etc)
 
 \makechapterstyle{Roman}{
@@ -14,3 +16,57 @@
   \renewcommand*{\printchaptertitle}{\chaptitlefont}
 }
 \chapterstyle{Roman}
+
+%-----------------------------------------------------------------
+% Uppercase variant
+\renewcommand{\thechapter}{\MakeTextUppercase{\roman{chapter}}}  % This changes the chapter numbers to Roman numerals everywhere (contents, chapter headings, page headers, etc)
+
+\makechapterstyle{RomanUC}{
+  \setlength{\beforechapskip}{1\onelineskip}      % beware if changing \beforechapskip - the actual whitespace is \onelineskip + \beforechapskip
+  \setlength{\midchapskip}{1\onelineskip}
+  \setlength{\afterchapskip}{1\onelineskip}
+  \renewcommand*{\chapnamefont}{\centering\MakeTextUppercase}       
+  \renewcommand*{\chaptitlefont}{\chapnamefont }  
+  \renewcommand*{\chapnumfont}{\chapnamefont }
+  \renewcommand*{\printchaptername}{\chapnumfont Chapter} 
+  \renewcommand*{\chapternamenum}{ }                          % the space between "Chapter" and "X"
+  \renewcommand*{\printchapternum}{\chapnumfont \thechapter}
+  \renewcommand*{\printchaptertitle}{\chaptitlefont}
+}
+\chapterstyle{RomanUC}
+
+%-----------------------------------------------------------------
+% Small Caps variant
+\renewcommand{\thechapter}{\MakeTextUppercase{\roman{chapter}}}  % This changes the chapter numbers to Roman numerals everywhere (contents, chapter headings, page headers, etc)
+
+\makechapterstyle{RomanSC}{
+  \setlength{\beforechapskip}{1\onelineskip}      % beware if changing \beforechapskip - the actual whitespace is \onelineskip + \beforechapskip
+  \setlength{\midchapskip}{1\onelineskip}
+  \setlength{\afterchapskip}{1\onelineskip}
+  \renewcommand*{\chapnamefont}{\centering\scshape}      
+  \renewcommand*{\chaptitlefont}{\chapnamefont }
+  \renewcommand*{\chapnumfont}{\chapnamefont }
+  \renewcommand*{\printchaptername}{\chapnumfont Chapter} 
+  \renewcommand*{\chapternamenum}{ }                          % the space between "Chapter" and "X"
+  \renewcommand*{\printchapternum}{\chapnumfont \thechapter}
+  \renewcommand*{\printchaptertitle}{\chaptitlefont}
+}
+\chapterstyle{RomanSC}
+
+%-----------------------------------------------------------------
+% Lowercase variant - keeps capitalisation as-is
+\renewcommand{\thechapter}{\MakeTextUppercase{\roman{chapter}}}  % This changes the chapter numbers to Roman numerals everywhere (contents, chapter headings, page headers, etc)
+
+\makechapterstyle{RomanLC}{
+  \setlength{\beforechapskip}{1\onelineskip}      % beware if changing \beforechapskip - the actual whitespace is \onelineskip + \beforechapskip
+  \setlength{\midchapskip}{1\onelineskip}
+  \setlength{\afterchapskip}{1\onelineskip}
+  \renewcommand*{\chapnamefont}{\centering}      
+  \renewcommand*{\chaptitlefont}{\chapnamefont }  
+  \renewcommand*{\chapnumfont}{\chapnamefont }
+  \renewcommand*{\printchaptername}{\chapnumfont Chapter} 
+  \renewcommand*{\chapternamenum}{ }                          % the space between "Chapter" and "X"
+  \renewcommand*{\printchapternum}{\chapnumfont \thechapter}
+  \renewcommand*{\printchaptertitle}{\chaptitlefont}
+}
+\chapterstyle{RomanLC}
