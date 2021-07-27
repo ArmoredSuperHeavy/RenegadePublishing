@@ -1,0 +1,11 @@
+\makechapterstyle{Written}{%
+  \setlength{\beforechapskip}{1\onelineskip}
+  \setlength{\midchapskip}{1\onelineskip}
+  \setlength{\afterchapskip}{1\onelineskip}
+  \renewcommand*{\chaptitlefont}{\centering}
+  \renewcommand*{\chapnamefont}{\chaptitlefont \MakeUppercase }
+  \renewcommand*{\chapnumfont}{\chaptitlefont}
+  \renewcommand*{\printchaptername}{}
+  \renewcommand*{\chapternamenum}{}
+  \renewcommand*{\printchapternum}{\chapnumfont \textit{Chapter \numtoName{\thechapter}}}
+}
