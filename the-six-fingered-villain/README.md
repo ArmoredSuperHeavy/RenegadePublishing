@@ -10,7 +10,7 @@ My imposition scripts rely on [pdfjam](https://github.com/rrthomas/pdfjam) - a c
 
 URLs are often long and my books are small. I like leaning on QR codes for digital information transmition for such things. [**qrcode**monkey](https://www.qrcode-monkey.com/) is my favorite service. 
 
-![Tumblr QR code](./sithelTumblrCode.png)
+<IMG SRC="./sithelTumblrCode.png" width="200">
 
 ## Shared Files
 
