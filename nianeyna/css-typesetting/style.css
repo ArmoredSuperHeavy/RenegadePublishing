@@ -1,20 +1,26 @@
+/* everything inside "@media screen" only affects the browser view, not the pdf. 
+   use this to adjust what you see while you're previewing in the browser. 
+   for example here I've set the page width to 50% to look more like a book page. */
 @media screen {
     body {
         width: 50%;
     }
-} 
-/* everything inside "@media screen" only affects the browser view, not the pdf. use this to adjust what you see while you're previewing in the browser. for example here I've set the page width to 50% to look more like a book page. */
+}
 
 @font-face {
-    font-family: FONT_NAME_HERE; /* replace this (and any other instances of FONT_NAME_HERE) with a friendly name of your choice for your font */
-    src: url(fonts/yourfont.ttf); /* replace the "url" with the relative file path to the font file you want to use */
+    /* replace this (and any other instances of FONT_NAME_HERE) with a friendly name of your choice for your font */
+    font-family: FONT_NAME_HERE;
+    /* replace the "url" with the relative file path to the font file you want to use */
+    src: url(fonts/yourfont.ttf); 
 }
+
+/* #region page */
 
 @page: right {
     @bottom-right {
         content: counter(page);
         font-family: FONT_NAME_HERE;
-        font-size: 18px;
+        font-size: 14pt;
     }
 }
 
@@ -22,20 +28,24 @@
     @bottom-left {
         content: counter(page);
         font-family: FONT_NAME_HERE;
-        font-size: 18px;
+        font-size: 14pt;
     }
 }
+
+/* #endregion */
+
+/* #region basic */
 
 body {
     margin: auto;
     text-align: justify;
     line-height: 1.5em;
-    font-size: 18px;
+    font-size: 14pt;
     font-family: FONT_NAME_HERE;
 }
 
 p {
-    text-indent: 2em;
+    text-indent: 1em;
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -51,7 +61,7 @@ hr {
 }
 
 hr::after {
-    content: '***';
+    content: '***'; /* you can replace *** with any unicode character/s */
 }
 
 #firstpage {
@@ -69,11 +79,11 @@ hr::after {
 }
 
 #title {
-    font-size: 32px;
+    font-size: 28pt;
 }
 
 #byline {
-    font-size: 24px;
+    font-size: 18pt;
     margin-top: 1em;
 }
 
@@ -82,17 +92,30 @@ hr::after {
     text-align: center;
 }
 
-#chapters .meta.group>p,blockquote {
+/* #endregion */
+
+/* #region notes */
+
+/* I've chosen to hide chapter notes by default. If you 
+   would like to display them, you can delete this section. */
+
+#chapters .meta.group>p {
     display: none;
 }
 
-.endnote-link {
+#chapters .meta.group>blockquote {
     display: none;
 }
 
-[id^="endnotes"] {
+#chapters .endnote-link {
     display: none;
 }
+
+#chapters [id^="endnotes"] {
+    display: none;
+}
+
+/* #endregion */
 
 /* #region preface */
 
@@ -103,7 +126,7 @@ hr::after {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    font-size: 14px;
+    font-size: 11pt;
 }
 
 #preface>p {
@@ -139,8 +162,12 @@ hr::after {
 }
 
 #preface .tags dd {
-    margin-left: 200px;
+    margin-left: 200px; /* might need to fiddle with this number depending on font size etc */
     text-align: left;
+}
+
+#preface .meta p {
+    text-indent: 0;
 }
 
 #preface .meta>p::after {
@@ -153,6 +180,10 @@ hr::after {
     margin-bottom: 1em;
 }
 
+#preface blockquote p {
+    margin-bottom: 1em;
+}
+
 /* #endregion */
 
 /* #region toc */
@@ -160,27 +191,39 @@ hr::after {
 #toc {
     break-before: right;
     break-after: right;
+    /* below makes the entire thing roughly centered. not strictly necessary but I think it looks nicer. */
     margin: auto;
     text-align: center;
     height: 100vh;
-    margin-top: 40vh;
+    margin-top: 40vh; /* this number can be adjusted to move the content up and down the page */
 }
 
+/* I find the list format convenient and it's what was used in the example I adapted this from. 
+   it's likely not necessary - could probably use divs or something else to make the line breaks. */
 #toc li {
-    list-style: none;
+    list-style: none; /* bullet points are default, remove them */
 }
 
+/* unlike with the list formatting, it's very important to use anchor tags for this. */
 #toc li a {
+    /* these two properties work together to put space between the 
+       chapter names and page numbers. width can be adjusted if desired. */
     width: 50%;
     display: inline-flex;
 }
 
+/* this bit controls what goes in the space between the chapter names and page numbers. 
+   if you like you can use border properties etc to decorate it. I've left it plain. */
 #toc li a::before {
     flex: auto;
     content: "";
     order: 1;
 }
 
+/* where the magic happens. make sure you've done the following in the html:
+   1. added ids to your chapter headings (id="ch1") and 
+   2. referenced them in the href attribute in the toc (href="#ch1")
+   don't forget that the HREF starts with "#" while the ID does not! */
 #toc li a::after {
     content: target-counter(attr(href, url), page);
     order: 2;
