@@ -16,6 +16,9 @@
 
 /* #region page */
 
+/* this is where you can configure the page numbers (or other stuff you want to
+   appear in the margins). here I've placed the page numbers at the bottom. */
+
 @page: right {
     @bottom-right {
         content: counter(page);
@@ -30,6 +33,23 @@
         font-family: FONT_NAME_HERE;
         font-size: 14pt;
     }
+}
+
+/* these next two @page rules allow you to start page numbers after the first page.
+   in this case we want 6 numberless pages at the beginning of the book.
+   (h/t tumblr user moth-time for helping figure out how to do this!) */
+
+@page :nth(-n+6) { 
+    @bottom-right {
+      content: none;
+    }
+    @bottom-left {
+      content: none;
+    }
+}
+
+@page: first {
+    counter-reset: page -6;
 }
 
 /* #endregion */
@@ -107,11 +127,11 @@ hr::after {
     display: none;
 }
 
-#chapters .endnote-link {
+#chapters [id^="endnotes"] {
     display: none;
 }
 
-#chapters [id^="endnotes"] {
+.endnote-link {
     display: none;
 }
 
