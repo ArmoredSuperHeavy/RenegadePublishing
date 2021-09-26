@@ -20,7 +20,7 @@
 		- ```-s A4``` sets the paper size. you can use different paper sizes - refer to the vivliostyle documentation for details.
 	- this should generate a file called "output.pdf" in the same folder as the html and css files
 	- if the pdf is not acceptable, continue adjusting the html and css and rebuilding until you're happy with it
-- use [quantumelephant](http://quantumelephant.co.uk/bookbinder/bookbinder.html) (or whatever method of imposition you choose) to generate signatures for print
+- use [bookbinder-js](https://momijizukamori.github.io/bookbinder-js/) (or whatever method of imposition you choose) to generate signatures for print
 - print and bind your book!
 
 *(css and instructions by nianeyna)*
