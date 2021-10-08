@@ -6,6 +6,11 @@
 \newcommand{\thebookname}{}
 \newcommand{\thepartname}{}
 
+% new environments to keep font changes contained
+\newenvironment{bookpageenv}{}{}
+\newenvironment{partenv}{}{}
+
+
 % Default page stylings that are the same as the non-overriden ones
 % Override these to do your restyling. Look at the memoir manual 6.4
 % for info on what to override to change fonts and whatnot.
@@ -33,10 +38,14 @@
     \setcounter{chapter}{0}
 
     \renewcommand{\thebookname}{#1}
-    \bookpagestyle{#1}
+    \begin{bookpageenv}
+        \bookpagestyle{#1}
+    \end{bookpageenv}
 }
 
 \renewcommand{\partmark}[2]{%
     \renewcommand{\thepartname}{#1}
-    \partpagestyle{#1}
+    \begin{pageenv}
+        \partpagestyle{#1}
+    \end{pageenv}
 }
