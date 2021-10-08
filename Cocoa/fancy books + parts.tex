@@ -1,0 +1,42 @@
+% by default, memoir doesn't give you many options for styling title pages for book and part subdivisions -
+% this overrides some of the bits to give you an easier interface into styling these pages.
+
+% Because we're overwriting \bookpagemark and \partmark we need new names to store the book and part titles
+% So they can be used 
+\newcommand{\thebookname}{}
+\newcommand{\thepartname}{}
+
+% Default page stylings that are the same as the non-overriden ones
+% Override these to do your restyling. Look at the memoir manual 6.4
+% for info on what to override to change fonts and whatnot.
+\newcommand{\bookpagestyle}[1]{
+    \centering
+    \normalfont
+      \printbookname \booknamenum \printbooknum
+      \midbookskip
+    \printbooktitle{#1}\par
+}
+
+\newcommand{\partpagestyle}[1] {
+    \centering
+    \normalfont
+    \printpartname \partnamenum \printpartnum \thepart
+    \midpartskip
+
+\printparttitle{#1}\par}
+
+% Where the magic happens! Note that #2 in both of these contains the default styling
+% if you want to use that for some reason.
+\renewcommand{\bookpagemark}[2]{% 
+    % Reset part and chapter counters manually (by default, their numbering is consecutive regardless of book)
+    \setcounter{part}{0}
+    \setcounter{chapter}{0}
+
+    \renewcommand{\thebookname}{#1}
+    \bookpagestyle{#1}
+}
+
+\renewcommand{\partmark}[2]{%
+    \renewcommand{\thepartname}{#1}
+    \partpagestyle{#1}
+}
