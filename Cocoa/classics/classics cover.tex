@@ -1,0 +1,262 @@
+% Based on code from https://nullk.github.io/penguin.html
+% Page size: Penguin Classics use the UK B-format (129 mm × 198 mm)
+% All the area values are calculated, however, so you should be able to change these
+% without distorting the layout - the extra space will go to the cover and back text areas.
+\documentclass[coverheight=198mm, coverwidth=129mm, spinewidth=15mm]{bookcover}
+
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+\usepackage{calc}
+\usepackage{qrcode}
+
+% Change the text here!
+% Note that the image will be scaled to fit the height, and then any right-hand excess will be cropped.
+\newcommand{\bookauthor}{Momijizukamori}
+\newcommand{\booktitle}{A Cool Frog}
+\newcommand{\coverillus}{demo/frog.jpg}
+\newcommand{\quotetext}{
+	``That sure is a cool frog there.''
+	\\ ---Someone, probably
+}
+\newcommand{\summtext}{
+	A classic text covering the golden poison frog (emph{Phyllobates terribilis}) and just how cool it is. 
+	emph{P. terribilis} is the largest species of poison dart frog, and can reach a size of 55 mm as adults, 
+	with females typically being larger than males. Like all poison dart frogs, the adults are brightly colored, 
+	but they lack the dark spots present in many other dendrobatids. The frog's colour pattern is aposematic
+	(a coloration to warn predators of its toxicity). The frog has tiny adhesive disks on its toes, which aid 
+	climbing of plants. It also has a bone plate in the lower jaw, which gives it the appearance of having teeth, 
+	a distinctive feature not observed in the other species of Phyllobates. The frog is normally diurnal.
+
+	It is also extremely brightly colored, how cool is that?
+}
+\newcommand{\addlfront}{Introduction by NONN E. MOUSE}
+\newcommand{\addlback}{
+	With an Introduction by NONN E. MOUSE
+	\\Notes by CHARLES DARWIN
+}
+\newcommand{\credittext}{Cover photo from the Smithsonian.}
+\newcommand{\qrlink}{https://www.si.edu/object/golden-poison-frog:nzp_NZP-20160226-311CTW}
+
+\usepackage{fontspec}
+\defaultfontfeatures{Scale=MatchLowercase,Ligatures=TeX}
+% Fonts - Penguin Classics uses a combo of Futura and Mrs Eaves Italic - if you have access to those, use them!
+% Otherwise, these are the next-best options in free fonts - Jost and Libre Baskerville Italic, with Spartan
+% for the imprint line. These are available here:
+% https://fonts.google.com/specimen/Jost
+% https://fonts.google.com/specimen/Libre+Baskerville
+% https://fonts.google.com/specimen/Spartan
+
+\newfontfamily\futura{Jost}[LetterSpace=3.0,Variant=1]
+\newfontfamily\futuracaps{Spartan}[LetterSpace=4.0]
+\newfontfamily\eaves{Libre Baskerville}[LetterSpace=8.0]
+
+\definecolor{alt}{HTML}{EB5530}
+
+% Font sizes and styling
+\newcommand{\titlefont}{\color{white}\fontsize{18pt}{21pt}\eaves\addfontfeature{LetterSpace=4.0}\centering\emph}
+\newcommand{\authorfont}{\color{alt}\fontsize{18pt}{22pt}\futura\addfontfeature{LetterSpace=18.0}\centering\MakeUppercase}
+
+\newcommand{\spinetitle}{\color{white}\fontsize{12pt}{12pt}\eaves\addfontfeature{LetterSpace=4.0}\emph}
+\newcommand{\spineauthor}{\color{alt}\fontsize{12pt}{12pt}\futura\addfontfeature{LetterSpace=10.0}\MakeUppercase}
+
+\newcommand{\quotefont}[1]{ {\color{alt}\fontsize{14pt}{20pt}\eaves
+\begin{center}
+	\emph{#1}
+\end{center}}}
+\newcommand{\summary}[1]{\setlength{\parskip}{1em}\fontsize{10.5pt}{18pt}\futura\color{white}{ #1}}
+
+\newcommand{\addlfont}[1]{{\fontsize{7pt}{12pt}\futura\addfontfeature{LetterSpace=16.0}
+\begin{center}
+	#1 
+\end{center}}}
+\newcommand{\imprintfont}[1]{{\fontsize{9pt}{9pt}\futuracaps\fontseries{mb}\color{black}\addfontfeature{LetterSpace=102.0}\MakeUppercase{#1}}}
+\newcommand{\spineimprintfont}[1]{{\fontsize{6pt}{6pt}\futura\color{white}\addfontfeature{LetterSpace=30.0}\MakeUppercase{#1}}}
+\newcommand{\creditfont}[1]{{\fontsize{7pt}{12pt}\color{white}\eaves\addfontfeature{LetterSpace=16.0}
+\begin{center}
+	#1 
+\end{center}}}
+
+% Lengths to control author/title vertical spacing
+\newlength{\midtitleskip}
+\setlength{\midtitleskip}{1em}
+
+\newlength{\beforetitleskip}
+\setlength{\beforetitleskip}{1cm}
+
+% Cover image
+\newbookcoverpart{illus}{
+	\setpartposx{\marklength+\bleedwidth+\flapwidth+\coverwidth+\spinewidth}
+	\setpartposy{\marklength}
+	\setpartwidth{\coverwidth+\bleedwidth}
+	\setpartheight{\coverheight+\bleedwidth-6cm}
+}
+
+% White band + imprint logos on top of it.
+\newbookcoverpart{stripe}{
+	\setpartposx{\marklength}
+	\setpartposy{\marklength+\coverheight+\bleedwidth-6cm}
+	\setpartwidth{2\coverwidth+2\bleedwidth+2\flapwidth+\spinewidth}
+	\setpartheight{1cm}
+}
+
+\newbookcoverpart{backimprint}{
+	\setpartposx{\marklength+\bleedwidth+\flapwidth}
+	\setpartposy{\marklength+\coverheight+\bleedwidth-6cm}
+	\setpartwidth{\coverwidth}
+	\setpartheight{1cm}
+}
+
+\newbookcoverpart{backlogo}{
+	\setpartposx{\marklength+\bleedwidth+{\coverwidth/2}-0.5cm+\flapwidth}
+	\setpartposy{\marklength+\coverheight+\bleedwidth-6cm}
+	\setpartwidth{1cm}
+	\setpartheight{1cm}
+}
+\newbookcoverpart{frontimprint}{
+	\setpartposx{\marklength+\bleedwidth+\spinewidth+\coverwidth+\flapwidth}
+	\setpartposy{\marklength+\coverheight+\bleedwidth-6cm}
+	\setpartwidth{\coverwidth}
+	\setpartheight{1cm}
+}
+
+\newbookcoverpart{frontlogo}{
+	\setpartposx{\marklength+\bleedwidth+\spinewidth-0.5cm+1.5\coverwidth+\flapwidth}
+	\setpartposy{\marklength+\coverheight+\bleedwidth-6cm}
+	\setpartwidth{1cm}
+	\setpartheight{1cm}
+}
+
+% Spine text areas
+\newbookcoverpart{spineinfo}{
+	\setpartposx{\marklength+\bleedwidth+\flapwidth+\coverwidth}
+	\setpartposy{\marklength+\bleedwidth}
+	\setpartwidth{\spinewidth}
+	\setpartheight{\coverheight-6cm}
+}
+
+\newbookcoverpart{spinelogo}{
+	\setpartposx{\marklength+\bleedwidth+\flapwidth+\coverwidth}
+	\setpartposy{\marklength+\bleedwidth+\coverheight-6cm}
+	\setpartwidth{\spinewidth}
+	\setpartheight{1cm}
+}
+
+\newbookcoverpart{spineimprint}{
+	\setpartposx{\marklength+\bleedwidth+\flapwidth+\coverwidth}
+	\setpartposy{\marklength+\bleedwidth+\coverheight-5cm}
+	\setpartwidth{\spinewidth}
+	\setpartheight{5cm}
+}
+
+% Back text area - includes pull quotes/summary
+% 1cm left and right margins, 1.5cm top margin, 0.5cm bottom margin
+\newbookcoverpart{backtext}{
+	\setpartposx{\marklength+\bleedwidth+\flapwidth+1cm}
+	\setpartposy{\marklength+\bleedwidth+1.5cm}
+	\setpartwidth{\coverwidth-2cm}
+	\setpartheight{\coverheight-8cm}
+}
+
+\newbookcoverpart{lowerback}{
+	\setpartposx{\marklength+\bleedwidth+\flapwidth+0.5cm}
+	\setpartposy{\marklength+\bleedwidth+\coverheight-5cm}
+	\setpartwidth{\coverwidth-1cm}
+	\setpartheight{4.5cm}
+}
+
+% Front text area - includes author, title, and sometimes editor/translator/intro writer
+% 0.5cm margins all around, but you can adjust the offset with the beforetitleskip length
+\newbookcoverpart{fronttext}{
+	\setpartposx{\marklength+\bleedwidth+\flapwidth+\coverwidth+\spinewidth+0.5cm}
+	\setpartposy{\marklength+\bleedwidth+\coverheight-5cm}
+	\setpartwidth{\coverwidth-1cm}
+	\setpartheight{5cm}
+}
+
+\newcommand{\imprint}{
+	\begin{center}
+		% there is some spacing fuckery here because 'Classics' sets shorter in the font.
+		% if you change the imprint name you may have to fiddle with the 3mm space to center it properly
+		\imprintfont{Renegade}
+		\hspace*{2cm}
+		\imprintfont{Classics}
+		\hspace*{3mm}
+	\end{center}
+}
+
+\newcommand{\logo}{
+	\adjincludegraphics[height=0.75cm,valign=t,set height=12pt, set depth=12pt]{tuxicon.png}
+}
+
+\newbookcovercomponenttype{center rotate}{
+\centering\rotatebox[origin=lB]{-90}{\makebox[\partheight]{\raggedright#1}}
+}
+
+\begin{document}
+\begin{bookcover}
+	\bookcovercomponent{color}{bg whole}{black}
+	\bookcovercomponent{normal}{illus}{
+		\adjustimage{Clip=0cm 0cm {\width-\partwidth*\height/\partheight} 0cm, height=\partheight}{\coverillus}
+		}
+	\bookcovercomponent{color}{stripe}{white}
+	\bookcovercomponent{normal}{backimprint}{\imprint}
+	\bookcovercomponent{normal}{frontimprint}{\imprint}
+
+	\bookcovercomponent{center rotate}{spineinfo}{
+		\hspace{1cm}\spineauthor\bookauthor
+		\hspace{6mm}\spinetitle\booktitle 
+		\hfill
+	}
+
+	\bookcovercomponent{center rotate}{spineimprint}{
+		\hspace{0.5cm}\spineimprintfont{Renegade\quad Classics}
+		\hfill
+	}
+
+	\bookcovercomponent{normal}{spinelogo}{
+		\centering{\logo}
+	}
+
+	\bookcovercomponent{normal}{backlogo}{
+		\centering{\logo}
+	}
+	\bookcovercomponent{normal}{frontlogo}{
+		\centering{\logo}
+	}
+
+	% FRONT TEXT AREA
+	\bookcovercomponent{normal}{fronttext}{%
+		\vspace*{\beforetitleskip}
+		\authorfont\bookauthor
+
+		\vspace*{\midtitleskip}
+		\titlefont\booktitle
+		\vspace*{\fill}
+
+		\addlfont{\addlfront}
+	}
+
+	% BACK TEXT AREA
+	\bookcovercomponent{normal}{backtext}{
+		\quotefont{\quotetext}
+
+		\summary{\summtext}
+
+		\vspace*{\fill}
+		
+		\addlfont{\addlback}
+	}
+
+	\bookcovercomponent{normal}{lowerback}{
+		\creditfont{\credittext}
+
+		\vspace*{\fill}
+		\raggedleft
+		\colorbox{white}{
+		\qrcode[padding, height=2cm]{\qrlink}}
+
+	}
+
+\end{bookcover}
+\end{document}
