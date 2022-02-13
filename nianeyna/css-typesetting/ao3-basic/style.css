@@ -95,16 +95,27 @@ hr::after {
     margin: auto;
     text-align: center;
     height: 100vh;
-    margin-top: 30vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
 }
 
 #title {
+    margin-top: 20vh;
     font-size: 28pt;
 }
 
 #byline {
     font-size: 18pt;
     margin-top: 1em;
+}
+
+#publisher {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
 #chapters .heading {

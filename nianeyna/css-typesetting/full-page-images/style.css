@@ -1,0 +1,40 @@
+@page landscape:left {
+    margin-right: 0;
+}
+
+@page landscape:right {
+    margin-left: 0;
+}
+
+.landscape-image {
+    page: landscape;
+    overflow: hidden;
+    break-before: left;
+    break-after: left;
+}
+
+.landscape-image .img-container {
+    width: 200%;
+}
+
+.landscape-image img {
+    max-width: 200%;
+    max-height: 100vh;
+    position: relative;
+    margin: auto;
+    display: block;
+}
+
+.landscape-image img.right {
+    right: 50%;
+}
+
+.portrait-image {
+    text-align: center;
+}
+
+.portrait-image img {
+    max-width: 100%;
+    max-height: 100vh;
+    margin: auto;
+}

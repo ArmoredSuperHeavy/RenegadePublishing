@@ -1,0 +1,32 @@
+@media screen {
+    .footnote {
+        display: none;
+    }
+}
+
+body {
+    counter-reset: footnotes;
+}
+
+span.footnote {
+    text-indent: 0;
+    text-align: justify;
+    font-size: 12pt;
+    font-weight: normal;
+    font-variant: normal;
+    line-height: 1.5em;
+    float: footnote;
+    counter-increment: footnotes;
+    break-inside: avoid;
+    footnote-policy: line;
+}
+
+.footnote::footnote-call {
+    content: counter(footnotes);
+    font-size: .5em;
+    vertical-align: top;
+}
+
+.footnote::footnote-marker {
+    content: counter(footnotes) ". ";
+}
