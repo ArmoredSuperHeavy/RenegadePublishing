@@ -1,0 +1,12 @@
+\makechapterstyle{Ghost}{%
+  \setlength{\beforechapskip}{1.5\onelineskip}
+  \setlength{\midchapskip}{1\onelineskip}
+  \setlength{\afterchapskip}{2.5\onelineskip}
+  \renewcommand*{\chaptitlefont}{\centering}
+  \renewcommand*{\chapnamefont}{\chaptitlefont \MakeUppercase }
+  \renewcommand*{\chapnumfont}{\chaptitlefont}
+  \renewcommand*{\printchaptername}{}
+  \renewcommand*{\chapternamenum}{}
+  \renewcommand*{\printchapternum}{\chapnumfont{\huge \leavevmode \raisebox{0.2ex}[0pt][0pt]{$\mathrightghost$}\ \thechapter\ \raisebox{0.2ex}[0pt][0pt]{$\mathleftghost$}}}
+}
+\chapterstyle{Ghost}
